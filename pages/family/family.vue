@@ -156,7 +156,7 @@ page{
 				overflow: hidden;
 			}
 		}
-		.invite .mvalue{ 
+		.invite .myvalue{ 
 			line-height: 28rpx; 
 			margin-top: 6rpx; 
 			font-family: 'Arial Narrow Bold', sans-serif;

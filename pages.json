@@ -67,6 +67,15 @@
             }
             
         }
+        ,{
+            "path" : "pages/employ/employ",
+            "style" :                                                                                    
+            {
+                "navigationBarTitleText": "",
+                "enablePullDownRefresh": false
+            }
+            
+        }
     ],
 	"globalStyle": {
 		"navigationBarTextStyle": "black",
