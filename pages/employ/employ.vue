@@ -104,14 +104,14 @@
 	page{
 		width: 100%;
 		height: 100%;
-		background: url(../../static/images/employ/embg.png) repeat-x top left;
+		background: #88f5fe url(../../static/images/employ/embg.png) repeat-x top left;
 		background-size: contain;
 	}
 	.header{
 		.avatar{
 			width: 180rpx;
 			height: 180rpx;
-			margin: 100rpx auto 20rpx auto;
+			margin: 20rpx auto;
 			image{
 				width: 100%;
 				height: 100%;
@@ -171,9 +171,9 @@
 							.employ-btn{
 								margin: 10rpx 0;
 								image{
-									width: 200rpx;
-									height: 90rpx;
-									zoom: 0.6;
+									width: 220rpx;
+									height: 100rpx;
+									zoom: 0.7;
 								}
 								
 							}

@@ -69,10 +69,16 @@
         }
         ,{
             "path" : "pages/employ/employ",
-            "style" :                                                                                    
+            "style" :
             {
-                "navigationBarTitleText": "",
-                "enablePullDownRefresh": false
+                "navigationBarTitleText": "雇佣工兵",
+				"navigationBarBackgroundColor":"#66a6ff",
+				"navigationBarTextStyle": "white",
+				"enablePullDownRefresh": false,
+				"app-plus":{
+					"background": "#66a6ff",
+					"titleNView":true
+				}
             }
             
         }

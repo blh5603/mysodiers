@@ -104,7 +104,7 @@
 page{
 	width: 100%;
 	height: 100%;
-	background-color: #11749d;
+	background: #0b5b8f url(../../static/images/center/centerbg.png) repeat-x top;
 }
 .header{
 	display: flex;
