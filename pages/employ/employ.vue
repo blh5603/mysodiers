@@ -12,8 +12,8 @@
 		<view class="maindiv">
 			<view class="sodierlist">
 				
-				<view class="sodieritem" v-for="(sodier,index) in sodiertype" :key="index">
-					<view class="item-left" :style="'background:url('+sodier.image+') no-repeat center center;'">
+				<view v-for="(sodier,index) in sodiertype" :key="index" :class="'sodieritem sbg' + index">
+					<view class="item-left" :style="'background:url('+sodier.image+') no-repeat center center;background-size:80% 75%;'">
 						<view class="item-status">
 							<image src="../../static/images/employ/bage.png"></image>
 						</view>
@@ -43,7 +43,7 @@
 								<view class="attr-right">{{sodier.military}}</view>
 							</view>
 							<view class="attr-item">
-								<view class="employ-btn">
+								<view class="employ-btn" @tap="employ()">
 									<image src="../../static/images/employ/employbtn.png" mode=""></image>
 								</view>
 							</view>
@@ -88,6 +88,14 @@
 				},
 				]
 			};
+		},
+		onLoad() {
+			
+		},
+		methods:{
+			employ(){
+				console.log(1111)
+			}
 		}
 	}
 </script>
@@ -103,7 +111,7 @@
 		.avatar{
 			width: 180rpx;
 			height: 180rpx;
-			margin: 120rpx auto 20rpx auto;
+			margin: 100rpx auto 20rpx auto;
 			image{
 				width: 100%;
 				height: 100%;
@@ -122,16 +130,16 @@
 		.sodierlist{
 			margin-top: 30rpx;
 			.sodieritem{
-				background: #FFFFFF;
+				zoom: .9;
 				width: 90%;
 				border-radius: 60rpx;
+				overflow: hidden;
 				margin: 0 auto;
 				margin-bottom: 30rpx;
 				display: flex;
 				
 				.item-left{
 					width: 50%;
-					background-size: cover;
 					
 					.item-status{
 						width: 240rpx;
@@ -139,10 +147,14 @@
 					}
 				}
 				.item-right{
+					background: #FFFFFF;
 					width: 50%;
+					
 					.attr-list{
-						margin: 20rpx;
-						line-height: 50rpx;
+						margin: 20rpx 20rpx;
+						line-height: 40rpx;
+						font-size: 10rpx;
+						font-family: 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;
 						.attr-item{
 							display: flex;
 							.item-left{
@@ -154,9 +166,9 @@
 							.employ-btn{
 								margin: 10rpx 0;
 								image{
-									width: 280rpx;
-									height: 100rpx;
-									zoom: 0.7;
+									width: 200rpx;
+									height: 90rpx;
+									zoom: 0.6;
 								}
 								
 							}
@@ -164,6 +176,10 @@
 					}
 				}
 			}
+			
+			.sbg0 { background: #e8cbe6; }
+			.sbg1 { background: #f1f1d1; }
+			.sbg2 { background: #c8f0fa; }
 		}
 	}
 </style>

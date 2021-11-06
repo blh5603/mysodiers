@@ -67,7 +67,7 @@
 						name:'employ',
 						image1:'../../static/images/adver/employ-CN.png',
 						image2:'../../static/images/adver/employ-EN.png',
-						url: '/pages/register/register'
+						url: '/pages/employ/employ'
 					}],
 					[{
 						name:'mysodier',
