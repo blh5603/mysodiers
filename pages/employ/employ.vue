@@ -142,8 +142,13 @@
 					width: 50%;
 					
 					.item-status{
-						width: 240rpx;
-						height: 240rpx;
+						width: 320rpx;
+						height: 300rpx;
+						image{
+							zoom: .6;
+							width: 320rpx;
+							height: 300rpx;
+						}
 					}
 				}
 				.item-right{
