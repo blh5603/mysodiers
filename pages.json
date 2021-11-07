@@ -176,10 +176,14 @@
 	
 	    ,{
             "path" : "pages/mysodiers/mysodiers",
-            "style" :                                                                                    
-            {
+            "style" : {
                 "navigationBarTitleText": "",
-                "enablePullDownRefresh": false
+				"navigationBarBackgroundColor": "#66a6ff",
+				"navigationBarTextStyle": "white",
+				"enablePullDownRefresh": false,
+				"app-plus": {
+					"titleNView": true
+				}
             }
             
         }
