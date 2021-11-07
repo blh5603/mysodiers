@@ -22,4 +22,6 @@
 	@import "static/css/iconfont.css";
 	@import "static/css/animate.min.css";
 	@import "static/css/warehouse.scss";
+	@import "static/css/popup.scss";
+	@import "static/css/common.scss";
 </style>

@@ -161,8 +161,29 @@
 				}
 			}
 
+		},
+		{
+			"path": "pages/pkAthletics/detail",
+			"style": {
+				"navigationBarTitleText": "PK详情",
+				"enablePullDownRefresh": true,
+				"navigationStyle": "custom",
+				"app-plus": {
+					"titleNView": false
+				}
+			}
 		}
-	],
+	
+	    ,{
+            "path" : "pages/mysodiers/mysodiers",
+            "style" :                                                                                    
+            {
+                "navigationBarTitleText": "",
+                "enablePullDownRefresh": false
+            }
+            
+        }
+    ],
 	"globalStyle": {
 		"navigationBarTextStyle": "black",
 		"navigationBarTitleText": "uni-app",

@@ -36,7 +36,7 @@
 						<view :class="['flows_item--right_status', item.status == '1' ? '' : 'color']">拆弹失败</view>
 						<view class="view-details">
 							<view class="flows_item--right_time">{{ item.time }}</view>
-							<view @click="openDetail(item.status)">查看详情 ></view>
+							<view @click="openDetail(item.status, item.id)">查看详情 ></view>
 						</view>
 					</view>
 				</view>
@@ -165,9 +165,12 @@ export default {
 		loadpkData() {},
 
 		// 跳转详情
-		openDetail(status) {
+		openDetail(status, id) {
 			this.status = status;
-			this.$refs.popup.open('center');
+			// this.$refs.popup.open('center');
+			uni.navigateTo({
+				url: './detail?id=' + id
+			})
 		},
 		// 关闭详情
 		close() {

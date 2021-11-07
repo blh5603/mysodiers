@@ -73,7 +73,7 @@
 						name:'mysodier',
 						image1:'../../static/images/adver/mysodier-CN.png',
 						image2:'../../static/images/adver/mysodier-EN.png',
-						url: '/pages/index/index',
+						url: '/pages/mysodiers/mysodiers',
 						
 					}],
 					[{
