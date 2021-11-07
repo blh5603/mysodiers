@@ -21,4 +21,5 @@
 	@import "static/css/header.scss";
 	@import "static/css/iconfont.css";
 	@import "static/css/animate.min.css";
+	@import "static/css/warehouse.scss";
 </style>

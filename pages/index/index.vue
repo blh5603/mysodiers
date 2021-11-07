@@ -80,7 +80,7 @@
 						name:'warehouse',
 						image1:'../../static/images/adver/warehouse-CN.png',
 						image2:'../../static/images/adver/warehouse-EN.png',
-						url: '/pages/index/index',
+						url: '/pages/warehouse/index',
 						height: '120'
 					},
 					{
@@ -94,7 +94,7 @@
 						name:'pkjjc',
 						image1:'../../static/images/adver/pkjjc-CN.png',
 						image2:'../../static/images/adver/pkjjc-EN.png',
-						url: '/pages/playgame/playgame'
+						url: '/pages/pkAthletics/index'
 					}],
 				]
 			}
