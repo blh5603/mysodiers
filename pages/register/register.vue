@@ -105,7 +105,7 @@
 				// 判断是否注册
 				service.getdata(this, service.api.main.exists, {
 					"address": this.myaddress,
-				}, 'POST', '', '', function(self, res) {
+				}, 'GET', '', '', function(self, res) {
 					// 反馈结果
 					if(res.code == 'success'){
 						if(res.data.exists){
