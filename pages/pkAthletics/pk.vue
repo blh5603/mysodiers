@@ -257,7 +257,7 @@ header {
 		position: relative;
 		width: 100rpx;
 		height: 200rpx;
-		background: url(/static/images/center/border.png) no-repeat;
+		background: url(/static/images/center/border-small.png) no-repeat;
 		background-size: cover;
 		.avatar-img {
 			position: absolute;

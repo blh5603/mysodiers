@@ -47,6 +47,7 @@
 
 <script>
 	import service from '@/utils/service.js';
+	import NCWeb3 from "@/static/js/web3";
 	
 	export default {
 		data() {
@@ -66,19 +67,29 @@
 			if(iuserkey != ''){
 				that.$util.Tips("/pages/index/index")
 			}
-			//test
-			let web3 = service.getWeb3();
+			
+			// test1
+			service.getWeb3().then(res => {
+				that.web3 = res;
+				res.eth.getAccounts(function(err, result) {
+					let address = result[0];
+					console.log(err, result);
+					that.myaddress = address
+				});
+			}).catch(function(result) {
+				console.log(result);
+				// 弹框提示错误信息
+			});
+			
+			// test2
+/* 			let web3 = service.getWeb3();
 			if(web3){
-				service.getWeb3().then(res => {
-					
-				  const web3 = res;
 				  web3.eth.getAccounts(function (err, result) {
 					  let address = result[0];
 					  console.log(address);
 					  that.myaddress = address
 				  });
-				});
-			}
+			} */
 		},
 		methods: {
 			bindRegister(){

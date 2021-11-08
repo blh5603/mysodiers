@@ -52,6 +52,9 @@ const api = {
 	main: {
 		register: api_root + "/users/create",
 		exists: api_root + "/users/exists",
+		userinfo: api_root + "/users/my_info",
+		myfriends: api_root + "/users/my_friends",
+		
 		notice: api_root + "/api/service/notice",//获取首页弹出公告
 	},
 	combo: {
@@ -232,19 +235,36 @@ const getlocation = function(self, _success){
 }
 
 // 获取 web3实例
-const getWeb3 = function () {
-    if (window.ethereum) {
-        return new Web3(window.ethereum);
-    }
-    // Legacy dapp browsers…
-    if (window.web3) {
-        // Use Mist/MetaMask's provider.
-        return window.web3;
-    }
-    // Fallback to localhost; use dev console port by default…
-    console.log('没有可用钱包');
-    return null;
-};
+const getWeb3 = () =>
+    new Promise((resolve, reject) => {
+        // Wait for loading completion to avoid race conditions with web3 injection timing.
+        window.addEventListener("load", async () => {
+            // Modern dapp browsers...
+            if (window.ethereum) {
+				const Web3 = require('web3');
+                const web3 = new Web3(window.ethereum);
+                try {
+                    // Request account access if needed
+                    await window.ethereum.enable();
+                    // Acccounts now exposed
+                    resolve(web3);
+                } catch (error) {
+                    reject(error);
+                }
+            }
+            // Legacy dapp browsers...
+            else if (window.web3) {
+                // Use Mist/MetaMask's provider.
+                const web3 = window.web3;
+                console.log("Injected web3 detected.");
+                resolve(web3);
+            }
+            // Fallback to localhost; use dev console port by default...
+            else {
+                reject('No available wallet');
+            }
+        });
+    });
 
 
 export default {
