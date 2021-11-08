@@ -80,6 +80,7 @@
 							<view class="myvalue">{{sodiertype[typeid].maxnum}}</view>
 						</view>
 					</view>
+					
 				</view>
 				<view class="employ">
 					<view class="text-choose">

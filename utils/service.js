@@ -45,21 +45,20 @@ if(process.env.NODE_ENV === 'development'){
 }
 */
 
-const api_root = 'https://api.yingxiaobao.shop';
+const api_root = 'https://www.bombgame.org';
 
 const api = {
 	root: api_root,
 	main: {
-		task: api_root + "/api/member/myTask",//我的任务
+		register: api_root + "/users/create",
+		exists: api_root + "/users/exists",
 		notice: api_root + "/api/service/notice",//获取首页弹出公告
 	},
 	combo: {
 		pay: api_root + "/api/machine/bySetmeal",//购买套餐
 	}
 }
-
-const upload = function(self, url, data, type, path, name, _success) {
-	if(data == '' || path == ''){
+const getdata = function(self, url, data, type, path, name, _success) {
 		uni.request({
 			url: url,
 			method: type,
@@ -78,7 +77,7 @@ const upload = function(self, url, data, type, path, name, _success) {
 					uni.setStorageSync('token','');
 					setTimeout(function(){
 						uni.reLaunch({
-							url: '/pages/login/login'
+							url: '/pages/register/register'
 						});           
 					},2000);
 				}else{
@@ -86,7 +85,9 @@ const upload = function(self, url, data, type, path, name, _success) {
 				}
 			},
 		});
-	}else{
+}
+
+const upload = function(self, url, data, type, path, name, _success) {
 		uni.uploadFile({
 			url : url,
 			filePath: path,
@@ -114,21 +115,6 @@ const upload = function(self, url, data, type, path, name, _success) {
 				}
 			}
 		});
-	}
-}
-const downLoad = function(self, url, data, type, path, name, _success) {
-	uni.request({
-		url: url,
-		method: type,
-		data: data,
-		header: {
-			'Authorization':'Bearer'+uni.getStorageSync('token'),
-		},
-		success: res => {
-			var res = res.data;
-			_success(self, res);
-		},
-	});
 }
 
 const auth = function(self, url, data, _success) {
@@ -231,6 +217,7 @@ const request = function(self, url, data, _success) {
 		},
 	});
 }
+
 const getlocation = function(self, _success){
 	uni.getLocation({
 		type: 'wgs84',
@@ -244,17 +231,34 @@ const getlocation = function(self, _success){
 	});	
 }
 
+// 获取 web3实例
+const getWeb3 = function () {
+    if (window.ethereum) {
+        return new Web3(window.ethereum);
+    }
+    // Legacy dapp browsers…
+    if (window.web3) {
+        // Use Mist/MetaMask's provider.
+        return window.web3;
+    }
+    // Fallback to localhost; use dev console port by default…
+    console.log('没有可用钱包');
+    return null;
+};
+
+
 export default {
 	api,
 	auth,
 	auths,
 	upload,
-	downLoad,
+	getdata,
 	request,
 	config,
 	api_root,
 	share,
 	User_paw,
 	Memory,
-	getlocation
+	getlocation,
+	getWeb3
 }

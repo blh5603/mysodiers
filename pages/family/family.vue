@@ -19,7 +19,7 @@
 				</view>
 				<view class="invite">
 					<view class="myname">邀请战友：</view>
-					<view class="myvalue">{{userinfo.minvite}}</view>
+					<view class="myvalue" @tap="copylink(userinfo.minvite)">{{userinfo.minvite}}</view>
 				</view>
 			</view>
 
@@ -95,7 +95,46 @@
 			}
 		},
 		methods: {
-			
+			copylink(info){
+
+				uni.showModal({
+					content: info,//模板中提示的内容
+					confirmText:'复制内容',
+					success:(res) => {//点击复制内容的后调函数
+						if(res.confirm) {
+							let result
+							// #ifndef H5
+							//uni.setClipboardData方法就是讲内容复制到粘贴板
+							uni.setClipboardData({
+								data: info,//要被复制的内容
+								success:() => {//复制成功的回调函数
+									uni.showToast({
+										title:'复制成功' 
+									})
+								}
+							});
+							// #endif
+							
+							 // #ifdef H5 
+								let textarea = document.createElement("textarea")
+								textarea.value = info
+								textarea.readOnly = "readOnly"
+								document.body.appendChild(textarea)
+								textarea.select() // 选中文本内容
+								textarea.setSelectionRange(0, info.length) 
+								uni.showToast({//提示
+									title:'复制成功' 
+								})
+								result = document.execCommand("copy") 
+								textarea.remove()    
+							// #endif
+						} else {
+							console.log('取消')
+						}
+					}
+				});
+
+			}
 		}
 	}
 </script>
@@ -118,7 +157,7 @@ page{
 	border-radius: 60rpx;
 	line-height: 60rpx;
 	color: #FFFFFF;
-	
+	opacity: .8;
 	/* border:2rpx solid rgba(0,0,0,0.2); */
 	animation: load 3.5s infinite alternate;
 	
@@ -126,10 +165,10 @@ page{
 	
 	@keyframes load {
 	    0% {
-	        box-shadow: inset 0px 0px 10px 5px rgba(100, 171, 235, 1), 0rpx 0rpx 10rpx 3rpx rgba(255, 255, 255, 0.5);
+	        box-shadow: inset 100rpx 0rpx 100rpx 5rpx rgba(100, 171, 235, 1), 0rpx 0rpx 200rpx 3rpx rgba(255, 255, 255, 0.5);
 	    }
 	    100% {
-	        box-shadow: inset 0px 0px 10px 5px rgba(100, 171, 235, 1), 0rpx 0rpx 40rpx 3rpx rgba(255, 255, 255, 1);
+	        box-shadow: inset 100rpx 0rpx 10rpx 5rpx rgba(100, 171, 235, 1), 0rpx 0rpx 40rpx 3rpx rgba(255, 255, 255, 1);
 	    }
 	}
 	

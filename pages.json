@@ -14,7 +14,8 @@
 				"navigationBarTitleText": "注册用户",
 				"navigationStyle": "custom", // 去掉微信小程序顶部导航
 				"app-plus": {
-					"titleNView": false //去掉app+h5顶部导航
+					"titleNView": false ,//去掉app+h5顶部导航
+					"bounce":"none"
 				}
 			}
 		}, {

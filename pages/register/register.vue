@@ -16,7 +16,7 @@
 						<image src="../../static/images/reg/address.png" mode=""></image>
 					</view>
 
-					<input class="m-text" type="text" v-model="account" placeholder="我的地址" placeholder-class="input-placeholder"></input>
+					<input class="m-text" type="text" v-model="myaddress" placeholder="我的地址" placeholder-class="input-placeholder"></input>
 				</view>
 
 				<view class="input-row">
@@ -24,7 +24,7 @@
 						<image src="../../static/images/reg/invater.png" mode=""></image>
 					</view>
 
-					<input class="m-text" type="password" v-model="password" placeholder="邀请人ID"placeholder-class="input-placeholder"></input>
+					<input class="m-text" type="text" v-model="myinviter" placeholder="邀请人ID"placeholder-class="input-placeholder"></input>
 				</view>
 
 
@@ -38,7 +38,7 @@
 
 				<view style="height: 30upx;"></view>
 
-				<view class="input-btn" @click="bindLogin" v-if="status == 1">点击注册</view>
+				<view class="input-btn" @click="bindRegister" v-if="status == 1">点击注册</view>
 				<view class="input-btn" v-else>点击注册</view>
 			</view>
 		</view>
@@ -46,22 +46,87 @@
 </template>
 
 <script>
+	import service from '@/utils/service.js';
+	
 	export default {
 		data() {
 			return {
-				account: '',
-				password: '',
+				myaddress: '',
+				myinviter: '',
 				status: 1,
 				checked: false,
-				
 			};
 		},
-		onLoad() {
+		onLoad(options) {
+			let that = this
+			uni.setStorageSync('user_token','')
 			
+			if(options.data) that.myinviter = options.data
+			let iuserkey = uni.getStorageSync('user_token');
+			if(iuserkey != ''){
+				that.$util.Tips("/pages/index/index")
+			}
+			//test
+			let web3 = service.getWeb3();
+			if(web3){
+				service.getWeb3().then(res => {
+					
+				  const web3 = res;
+				  web3.eth.getAccounts(function (err, result) {
+					  let address = result[0];
+					  console.log(address);
+					  that.myaddress = address
+				  });
+				});
+			}
 		},
 		methods: {
-			bindLogin(){
-				console.log(111)
+			bindRegister(){
+				
+				if(this.myaddress == ""){
+					this.$util.Tips({title: '我的地址格式有误！'});return;
+				}
+				
+				if(this.myinviter == ""){
+					this.$util.Tips({title: '邀请人不能为空！'});return;
+				}
+				
+				// 判断是否注册
+				service.getdata(this, service.api.main.exists, {
+					"address": this.myaddress,
+				}, 'POST', '', '', function(self, res) {
+					// 反馈结果
+					if(res.code == 'success'){
+						if(res.data.exists){
+							self.$util.Tips({title: '用户已注册！'},"/pages/index/index");return;
+						}
+						else
+						{
+							console.log('可以注册！')
+						}
+					}
+					else
+					{
+						self.$util.Tips({title: res.msg});return;
+					}
+				});
+				
+				// 发送注册请求
+				service.getdata(this, service.api.main.register, {
+					"address": this.myaddress,
+					"invite_code": this.myinviter,
+				}, 'POST', '', '', function(self, res) {
+					// 反馈结果
+					if(res.code == 'success'){
+						self.$util.Tips({title: '注册成功！'});
+						uni.setStorageSync('user_token', res.data.user_token)
+					}
+					else
+					{
+						self.$util.Tips({title: res.msg});
+					}
+					return;
+				});
 			},
 			forget(){
 				
@@ -76,6 +141,7 @@
 		height: 100%;
 		background: url(../../static/images/reg/regbg.png) no-repeat fixed top;
 		background-size: 100%;
+		overflow: hidden;  
 	}
 	
 	.login{

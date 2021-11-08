@@ -101,6 +101,7 @@
 		},
 		onLoad() {
 			this.lanpic = this.langpics[this.lantype].url;
+
 		},
 		methods: {
 			tourl(url){
