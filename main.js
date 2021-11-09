@@ -13,7 +13,9 @@ const i18n = new VueI18n({
 	messages:{
 		'zh': require('./langs/zh.js'),
 		'en': require('./langs/en.js')
-	}
+	},
+	//formatFallbackMessages: true,
+	silentFallbackWarn: true
 });
 Vue.prototype._i18n = i18n;
 Vue.prototype.$util = util;

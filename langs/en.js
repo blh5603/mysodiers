@@ -9,7 +9,8 @@ export const lang = {
 		"item_contribut": 	"Contribution",
 		"item_military": 	"military",
 		"popup_level":		"Level",
-		"popup_account":	"Account"
+		"popup_account":	"Account",
+		"popup_max":		"Maximum"
 	},
 	"family":{
 		
@@ -18,6 +19,7 @@ export const lang = {
 		
 	},
 	"notice":{
+		"noticename":		"Notice",
 		
 	},
 	"pkAthletics":{

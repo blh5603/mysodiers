@@ -10,11 +10,13 @@
 			<view class="mainrow">
 				<view class="userinfo">
 					<view class="avatar">
-						<image src="../../static/images/avatar.png"></image>
+						<navigator url="/pages/family/family">
+							<image src="../../static/images/avatar.png"></image>
+						</navigator>
 					</view>
 					<view class="mainfo">
-						<view class="nickname">{{username}}</view>
-						<view class="levelname">{{levelname}}</view>
+						<view class="nickname" v-text="userinfo.invite_code"></view>
+						<view class="levelname" v-text="userinfo.role_name"></view>
 					</view>
 				</view>
 				<view class="notice">
@@ -25,7 +27,7 @@
 		</view>
 
 		<view class="maindiv">
-			<view class="maintitle">{{noticename[lantype]}}</view>
+			<view class="maintitle">{{i18n.noticename}}</view>
 			<view class="noticelist">
 				
 				<view class="noticeitem" v-for="(item,index) in noticelist"  :key="index">
@@ -55,8 +57,11 @@
 	export default {
 		data() {
 			return {
-				username: 'Sodier GH',
-				levelname: 'V1',
+				userinfo: {
+					invite_code: '',
+					role_name: '',
+					invite_url: 'https://www.bombgame.org/users/new'
+				},
 				lantype: 0,
 				lanpic: '',
 				lanchk: 0,
@@ -92,7 +97,13 @@
 				]
 			}
 		},
+		computed: {
+			i18n () {
+				return this.$t('lang.notice')
+			}
+		},
 		onLoad() {
+			
 			this.lanpic = this.langpics[this.lantype].url;
 		},
 		methods: {
@@ -109,8 +120,10 @@
 				{
 					this.lantype = 0;
 				}
+				uni.setStorageSync('language',this.langpics[this.lantype].name)
+				this.$i18n.locale = uni.getStorageSync('language')
+console.log('ggg:'+this.$i18n.locale)
 				
-				console.log(this.lantype)
 				this.lanpic = this.langpics[this.lantype].url;
 			},
 			chekstatus(e){

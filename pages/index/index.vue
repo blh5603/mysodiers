@@ -20,9 +20,9 @@
 					</view>
 				</view>
 				<view class="notice">
-					<navigator url="/pages/notice/notice">
+					<!-- <navigator url="/pages/notice/notice"> -->
 						<image src="../../static/images/noticelogo.png"></image>
-					</navigator>
+					<!-- </navigator> -->
 				</view>
 			</view>
 			
@@ -110,7 +110,7 @@
 		onLoad() {
 			// console.log(this.$i18n.locale)
 			// uni.setStorageSync('user_token','0x5ca09ea346730984b586ca170728f46661401ad3')
-			
+			let that = this
 			this.lanpic = this.langpics[this.lantype].url;
 			
 			this.user_token = uni.getStorageSync('user_token') //user_token
@@ -118,6 +118,26 @@
 			if(this.user_token == null || this.user_token == ''){
 				this.$util.Tips({title: '信息有误！'},"/pages/register/register");return;
 			}
+			
+			// 没有注册，连接钱包读取地址
+			service.getWeb3().then(res => {
+				that.web3 = res;
+				res.eth.getAccounts(function(err, result) {
+					let address = result[0];
+					// console.log(err, result);
+					that.myaddress = address
+					
+					let isexist = that.checkExist(address);
+					//console.log(isexist);
+					if(isexist){
+						// 更新用户信息
+						uni.setStorageSync('user_token', address)
+					}
+				});
+			}).catch(function(result) {
+				console.log(result);
+				// 弹框提示错误信息
+			});
 			
 			// 获取用户信息
 			service.getdata(this, service.api.main.userinfo, {
@@ -142,21 +162,32 @@
 				
 				this.$util.Tips(url);
 			},
+			async checkExist(address){
+				// 判断是否注册
+				let result = false;
+				await service.getdata(this, service.api.main.exists, {
+					"address": address,
+				}, 'GET', '', '', function(self, res) {
+					// 反馈结果
+					if(res.code == 'success'){
+						if(res.data.exists){
+							result = true;
+						}
+					}
+				});
+				return result;
+			},
 			changelang(){
 				
 				if(this.lanchk == 0){
 					this.lanchk = 1;
-				}
-				else
-				{
+				}else{
 					this.lanchk = 0;
 				}
 				
 				if(this.lantype == 0){
 					this.lantype = 1;
-				}
-				else
-				{
+				}else{
 					this.lantype = 0;
 				}
 				uni.setStorageSync('language',this.langpics[this.lantype].name)

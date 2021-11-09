@@ -77,7 +77,7 @@
 					that.myaddress = address
 					
 					let isexist = that.checkExist(address);
-					console.log(isexist);
+					//console.log(isexist);
 					if(isexist){
 						// 更新用户信息
 						uni.setStorageSync('user_token', address)
