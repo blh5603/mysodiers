@@ -116,28 +116,32 @@
 			this.user_token = uni.getStorageSync('user_token') //user_token
 			
 			if(this.user_token == null || this.user_token == ''){
-				this.$util.Tips({title: '信息有误！'},"/pages/register/register");return;
+				
+				// 没有注册，连接钱包读取地址
+				service.getWeb3().then(res => {
+					that.web3 = res;
+					res.eth.getAccounts(function(err, result) {
+						let address = result[0];
+						// console.log(err, result);
+						that.myaddress = address
+						
+						let isexist = that.checkExist(address);
+						// console.log(isexist);
+						if(isexist){
+							// 更新用户信息
+							uni.setStorageSync('user_token', address)
+							this.user_token = address
+						}
+					});
+				}).catch(function(result) {
+					console.log(result);
+					// 弹框提示错误信息
+				});
+				
+				//this.$util.Tips({title: '信息有误！'},"/pages/register/register");return;
 			}
 			
-			// 没有注册，连接钱包读取地址
-			service.getWeb3().then(res => {
-				that.web3 = res;
-				res.eth.getAccounts(function(err, result) {
-					let address = result[0];
-					// console.log(err, result);
-					that.myaddress = address
-					
-					let isexist = that.checkExist(address);
-					//console.log(isexist);
-					if(isexist){
-						// 更新用户信息
-						uni.setStorageSync('user_token', address)
-					}
-				});
-			}).catch(function(result) {
-				console.log(result);
-				// 弹框提示错误信息
-			});
+
 			
 			// 获取用户信息
 			service.getdata(this, service.api.main.userinfo, {
