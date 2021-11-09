@@ -21,6 +21,7 @@
 		},
 		methods:{
 			play(){
+				this.$util.Tips("/pages/index/index")
 				console.log('game played')
 			}
 		}

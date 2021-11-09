@@ -19,7 +19,9 @@
 				</view>
 				<view class="invite">
 					<view class="myname">邀请战友：</view>
-					<view class="myvalue" @tap="copylink(userinfo.invite_url)">{{userinfo.invite_url}}</view>
+					<view class="myvalue" @tap="copylink(userinfo.invite_url)">
+						{{userinfo.invite_url}}
+					</view>
 				</view>
 			</view>
 
@@ -51,7 +53,7 @@
 				</view>
 				<view class="memberinfo">
 					<view class="id">ID: {{item.invite_code}}</view>
-					<view class="level">{{item.role_name}}</view>
+					<view class="level" title="item.role_name">{{item.role_name}}</view>
 					<view class="operabtn" v-text="item.address">登录钱包地址</view>
 				</view>
 				<view class="membercount">
@@ -90,16 +92,17 @@
 		},
 		onLoad() {
 			
-			this.user_token = '0x5ca09ea346730984b586ca170728f46661401ad3'; //uni.getStorageSync('user_token') //user_token
+			this.user_token = uni.getStorageSync('user_token') //user_token
 			if(this.user_token == ''){
-				this.$util.Tips({title: '信息有误！'},"/pages/index/index");return;
+				this.$util.Tips({title: '信息有误！'},"/pages/register/register");return;
 			}
 			
 			// 获取用户信息
 			service.getdata(this, service.api.main.userinfo, {
 				"user_token": this.user_token,
 			}, 'POST', '', '', function(self, res) {
-				console.log(res)
+				// console.log(res)
+				
 				// 反馈结果
 				if(res.code == 'success'){
 					self.userinfo = res.data
@@ -222,6 +225,7 @@ page{
 	margin-left: 20rpx;
 	margin-right: 20rpx;
 	margin-bottom: 30rpx;
+	margin-top: 20rpx;
 	padding: 14rpx 28rpx;
 	background: #64abeb;
 	border-radius: 60rpx;
@@ -234,7 +238,7 @@ page{
 	font-size: 40rpx;
 	
 	@keyframes load {
-	    0% {
+	    20% {
 	        box-shadow: inset 100rpx 0rpx 100rpx 5rpx rgba(100, 171, 235, 1), 0rpx 0rpx 200rpx 3rpx rgba(255, 255, 255, 0.5);
 	    }
 	    100% {
@@ -295,13 +299,15 @@ page{
 				font-family: Verdana, Geneva, Tahoma, sans-serif;
 				width: 100%;
 				text-align: left;
+				white-space: nowrap;
 			}
 			.level{
 				background: url(../../static/images/center/level.png) no-repeat center left;
 				background-size: 70%;
-				text-indent: 70rpx;
+				text-indent: 50rpx;
 				font-size: 12rpx;
-				line-height: 40rpx;
+				line-height: 50rpx;
+				overflow: hidden;
 			}
 			.operabtn{
 				font-size: 12rpx;

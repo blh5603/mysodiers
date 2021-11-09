@@ -15,6 +15,10 @@ const Memory = function(memory){
 	uni.setStorageSync('memory',memory)
 }
 
+const Language = function(language){
+	uni.setStorageSync('language', language)
+}
+
 //分享配置
 const share = [{
 	name:'分享到微信好友',
@@ -50,18 +54,20 @@ const api_root = 'https://www.bombgame.org';
 const api = {
 	root: api_root,
 	main: {
-		register: api_root + "/users/create",
-		exists: api_root + "/users/exists",
-		userinfo: api_root + "/users/my_info",
-		myfriends: api_root + "/users/my_friends",
-		
-		notice: api_root + "/api/service/notice",//获取首页弹出公告
+		register: 	api_root + "/users/create",
+		exists: 	api_root + "/users/exists",
+		userinfo: 	api_root + "/users/my_info",
+		myfriends: 	api_root + "/users/my_friends",
+		notice: 	api_root + "/users/notice",
 	},
 	combo: {
 		pay: api_root + "/api/machine/bySetmeal",//购买套餐
 	}
 }
-const getdata = function(self, url, data, type, path, name, _success) {
+const getdata = async function(self, url, data, type, path, name, _success) {
+		let lng = uni.getStorageSync('language');
+		if(lng != "") data['language'] = lng;
+		return new Promise((resolve, reject)=>{
 		uni.request({
 			url: url,
 			method: type,
@@ -85,9 +91,14 @@ const getdata = function(self, url, data, type, path, name, _success) {
 					},2000);
 				}else{
 					_success(self, res);
+					resolve(res)
 				}
 			},
+			fail: res=>{
+				reject(err)
+			}
 		});
+	});
 }
 
 const upload = function(self, url, data, type, path, name, _success) {

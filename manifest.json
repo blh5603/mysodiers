@@ -89,6 +89,21 @@
     },
     "h5" : {
         "title" : "mysodiers",
-        "domain" : "game.hndoson.com"
+        "domain" : "game.hndoson.com",
+		"devServer" : {
+			"https" : false,
+			"port" : 8080,
+			"proxy" : {
+				"/apis" : {
+					"target" : "https://www.bombgame.org",
+					"changeOrigin" : true,
+					"secure" : false,
+					"pathRewrite" : {
+						"^/user" : ""
+					}
+				}
+			}
+		}
     }
+	
 }

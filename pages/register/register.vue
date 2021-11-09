@@ -60,36 +60,38 @@
 		},
 		onLoad(options) {
 			let that = this
-			uni.setStorageSync('user_token','')
 			
+			// test
+			// uni.setStorageSync('user_token','0x5ca09ea346730984b586ca170728f46661401ad3')
+			
+			// 如果已经注册转入游戏开始页
 			if(options.data) that.myinviter = options.data
 			let iuserkey = uni.getStorageSync('user_token');
-			if(iuserkey != ''){
-				that.$util.Tips("/pages/index/index")
-			}
 			
-			// test1
+			// 没有注册，连接钱包读取地址
 			service.getWeb3().then(res => {
 				that.web3 = res;
 				res.eth.getAccounts(function(err, result) {
 					let address = result[0];
-					console.log(err, result);
+					// console.log(err, result);
 					that.myaddress = address
+					
+					let isexist = that.checkExist(address);
+					console.log(isexist);
+					if(isexist){
+						// 更新用户信息
+						uni.setStorageSync('user_token', address)
+						
+						// 已注册用户跳转
+						that.$util.Tips("/pages/playgame/playgame");return;
+					}
+					
 				});
 			}).catch(function(result) {
 				console.log(result);
 				// 弹框提示错误信息
 			});
 			
-			// test2
-/* 			let web3 = service.getWeb3();
-			if(web3){
-				  web3.eth.getAccounts(function (err, result) {
-					  let address = result[0];
-					  console.log(address);
-					  that.myaddress = address
-				  });
-			} */
 		},
 		methods: {
 			bindRegister(){
@@ -103,24 +105,11 @@
 				}
 				
 				// 判断是否注册
-				service.getdata(this, service.api.main.exists, {
-					"address": this.myaddress,
-				}, 'GET', '', '', function(self, res) {
-					// 反馈结果
-					if(res.code == 'success'){
-						if(res.data.exists){
-							self.$util.Tips({title: '用户已注册！'},"/pages/index/index");return;
-						}
-						else
-						{
-							console.log('可以注册！')
-						}
-					}
-					else
-					{
-						self.$util.Tips({title: res.msg});return;
-					}
-				});
+				let isexist = this.checkExist(this.myaddress);
+				if(isexist){
+					//已注册用户跳转
+					self.$util.Tips({title:"用户已存在！"});return;
+				}
 				
 				// 发送注册请求
 				service.getdata(this, service.api.main.register, {
@@ -138,6 +127,21 @@
 					}
 					return;
 				});
+			},
+			async checkExist(address){
+				// 判断是否注册
+				let result = false;
+				await service.getdata(this, service.api.main.exists, {
+					"address": address,
+				}, 'GET', '', '', function(self, res) {
+					// 反馈结果
+					if(res.code == 'success'){
+						if(res.data.exists){
+							result = true;
+						}
+					}
+				});
+				return result;
 			},
 			forget(){
 				
