@@ -67,11 +67,11 @@
 				lanchk: 0,
 				langpics: [
 					{
-						name:'CN',
+						name:'zh-CN',
 						url:'../../static/images/lang-CN.png'
 					},
 					{
-						name:'EN',
+						name:'en',
 						url:'../../static/images/lang-EN.png'
 					}],
 				noticename:['公告', 'NOTICE'],

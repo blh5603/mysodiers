@@ -60,7 +60,7 @@
 				lanpic: '',
 				lanchk: 0,
 				langpics: [{
-						name: 'zh',
+						name: 'zh-CN',
 						url: '../../static/images/lang-CN.png'
 					},
 					{

@@ -9,9 +9,9 @@ import screenTextScroll from 'components/screenTextScroll/screenTextScroll.vue'
 import VueI18n from 'vue-i18n'
 Vue.use(VueI18n)
 const i18n = new VueI18n({
-	locale: 'zh',
+	locale: 'zh-CN',
 	messages:{
-		'zh': require('./langs/zh.js'),
+		'zh-CN': require('./langs/zh.js'),
 		'en': require('./langs/en.js')
 	},
 	//formatFallbackMessages: true,

@@ -85,6 +85,7 @@
 
 					that.checkExist(address).then(function(rs) {
 						if (rs) {
+							console.log(rs)
 							// 更新用户信息
 							uni.setStorageSync('user_token', address)
 
